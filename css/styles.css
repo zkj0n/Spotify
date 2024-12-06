@@ -1,0 +1,372 @@
+@font-face {
+  font-family: "spotify-font";
+  src: url("../media/fonts/CircularSpotifyText-Book.otf");
+}
+:root {
+  --spotify-green: #1db954;
+  --spotify-black: #212121;
+  --spotify-dark: #121212;
+  --spotify-gray: #535353;
+  --spotify-light-gray: #b3b3b3;
+  --spotify-white: #ffffff;
+  --scale-speed: 0.14s;
+  --opacity-speed: 0.2s;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  background-color: var(--spotify-dark);
+  color: var(--spotify-white);
+  font-family: "spotify-font";
+}
+
+/* main */
+main {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: 90vh;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+
+/* aside */
+aside {
+  background-color: var(--spotify-dark);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content:start;
+  height: 100%;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+aside .window-control {
+  margin-left: 1rem;
+  display: block;
+  font-size: 3vw;
+}
+aside .window-control span:first-child {
+  color: #ff5f56;
+}
+aside .window-control span:nth-child(2) {
+  color: #ffbd2e;
+}
+aside .window-control span:last-child {
+  color: #27c93f;
+}
+
+aside .filter {
+  margin-left: 1rem;
+  padding: 1rem;
+  background-color: var(--spotify-black);
+  color: var(--spotify-light-light-gray);
+  display: flex;
+  flex-direction: column;
+  font-size: 0.7rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+}
+aside .filter i:hover {
+  cursor: pointer;
+}
+aside .filter .filter-head,
+.filter-item {
+  display: grid;
+  grid-template-columns: 1fr 11fr;
+  align-items: center;
+  gap: 0.2rem;
+}
+aside .filter .filter-item {
+  display: none;
+  margin-top: 0.8rem;
+}
+aside .filter .filter-item:hover {
+  cursor: pointer;
+}
+aside .filter .selected {
+  background-color: var(--spotify-gray);
+}
+aside .img-song {
+  justify-self: flex-end;
+  background-color: var(--spotify-gray);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+}
+aside .img-song img {
+  border-radius: 0.5rem;
+  width: 100%;
+  max-height: 20rem;
+}
+
+.hidden {
+  display: none;
+}
+
+/* animacion */
+aside .window-control span {
+  transition: transform var(--scale-speed) linear;
+}
+aside .window-control span:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+/* Animación de movimiento de arriba a abajo y cruce de posiciones */
+@keyframes moveAndSwap {
+  0% {
+      transform: translateY(0);
+      z-index: 1;
+  }
+  25% {
+      transform: translateY(-20px);
+      z-index: 3;
+  }
+  50% {
+      transform: translateY(20px);
+      z-index: 2;
+  }
+  75% {
+      transform: translateY(-10px);
+      z-index: 3;
+  }
+  100% {
+      transform: translateY(0);
+      z-index: 1;
+  }
+}
+
+/* Aplicamos la animación a los botones */
+aside .window-control .bx {
+  animation: moveAndSwap 3s infinite ease-in-out;
+  position: relative;  /* Asegura que el z-index funcione */
+}
+
+/* Retrasos para los botones para que se muevan de manera escalonada */
+aside .window-control .bxs-circle:nth-child(1) {
+  animation-delay: 0s;
+}
+
+aside .window-control .bxs-circle:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+aside .window-control .bxs-circle:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+/* Estilo básico para la clase .video */
+aside .video {
+  width: 100%;
+  margin: 1rem;
+  margin-top: 2rem;
+  box-shadow: #ffffff 0px 0px 10px;
+  animation: shake 0.1s infinite, shadowBlink 0.5s infinite alternate;
+}
+aside .video video {
+  width: 100%;
+}
+
+/* Animación de temblor */
+@keyframes shake {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(-5px) translateY(2px);
+  }
+  50% {
+    transform: translateX(2px) translateY(-2px);
+  }
+  75% {
+    transform: translateX(-2px) translateY(2px);
+  }
+  100% {
+    transform: translateX(2px) translateY(-2px);
+  }
+}
+
+/* Animación de parpadeo de sombra */
+@keyframes shadowBlink {
+  0% {
+    box-shadow: #ffffff 0px 0px 10px;
+  }
+  50% {
+    box-shadow: #ffffff 0px 0px 25px;
+  }
+  100% {
+    box-shadow: #ffffff 0px 0px 10px;
+  }
+}
+
+/* navbar */
+nav {
+  background-color: var(--spotify-gray);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+nav .search {
+  background-color: var(--spotify-white);
+  border-radius: 50px;
+  color: var(--spotify-dark);
+  font-size: 0.7rem;
+  padding: 0.5rem;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+nav .search label {
+  cursor: text;
+  font-size: 1rem;
+}
+nav .search input {
+  border: none;
+  width: 6rem;
+}
+nav .search input:focus {
+  outline: none;
+}
+nav .user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+nav .user img {
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+}
+/* header */
+header {
+  background: linear-gradient(to top, var(--spotify-dark), var(--spotify-gray));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+header button {
+  background-color: var(--spotify-green);
+  border: none;
+  border-radius: 50px;
+  color: var(--spotify-white);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: transform var(--scale-speed) linear;
+}
+header i {
+  color: var(--spotify-white);
+  transition: transform var(--scale-speed) linear;
+}
+header button:hover,
+header i:hover {
+  transform: scale(1.08);
+  cursor: pointer;
+}
+
+/* playlist */
+.playlist {
+  background-color: var(--spotify-black);
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  max-height: 70vh;
+  display: block;
+  overflow-y: scroll;
+}
+.playlist::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.playlist table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+.playlist table thead {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: var(--spotify-black);
+  color: var(--spotify-light-gray);
+  font-size: 1.3rem;
+}
+.playlist table th,
+.playlist table td {
+  border-bottom: 1px solid var(--spotify-gray);
+  padding: 1rem;
+}
+
+/* play button */
+.playlist table td .circle-icon {
+  opacity: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--spotify-green);
+  border-radius: 100%;
+  padding: 0.4rem;
+  transition: transform var(--scale-speed) linear;
+}
+.playlist table td .circle-icon i {
+  font-size: 1.5rem;
+}
+.playlist table tr:hover .circle-icon {
+  opacity: 1;
+  transition: opacity var(--opacity-speed) linear;
+  cursor: pointer;
+}
+.playlist table tr .circle-icon:hover {
+  transform: scale(1.05);
+}
+.playlist .playing{
+  background-color: var(--spotify-gray);
+}
+
+/* fav button */
+.playlist table td:last-child {
+  color: var(--spotify-green);
+  transform: scale(1.4);
+}
+.playlist table td:last-child:hover {
+  transform: scale(1.6);
+  cursor: pointer;
+}
+
+/* footer */
+footer {
+  min-height: 10vh;
+  background-color: var(--spotify-gray);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+footer .progress-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+footer .progress-bar .controls {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.4rem;
+}
+footer .progress-bar #play-pause {
+  scale: 1.5;
+}
+footer .progress-bar #play-pause:hover {
+  scale: 1.7;
+  cursor: pointer;
+}
+footer .progress-bar .progress{
+  background-color: var(--spotify-green);
+  width: 50vw;
+}
